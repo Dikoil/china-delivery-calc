@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Доставка КЗ">
+  <meta name="description" content="Калькулятор сравнения доставки из Китая в Казахстан: пункт выдачи Jana Post vs бесплатная официальная доставка с НДС и комиссиями.">
+  <title>Доставка из Китая — Калькулятор сравнения</title>
+  <link rel="icon" type="image/svg+xml" href="./icon.svg">
+  <link rel="apple-touch-icon" href="./icon.svg">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="header-title-wrap">
+        <span class="header-emoji" aria-hidden="true">📦</span>
+        <h1 class="header-title">Доставка из Китая</h1>
+      </div>
+      <div class="header-actions">
+        <span id="headerRateBadge" class="rate-pill" title="Текущий курс доллара">$1 = 455 ₸</span>
+        <button id="installBtn" class="install-btn" type="button" hidden>
+          Установить
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-main">
+    <div class="layout-grid">
+      <!-- Левая колонка на ПК / Верх на телефоне -->
+      <div class="layout-col-inputs">
+        <section class="card inputs-card" aria-label="Параметры товара и доставки">
+          <div class="input-row-2col">
+            <div class="field">
+              <label class="field-label" for="priceInput">Цена товара, ₸</label>
+              <input
+                id="priceInput"
+                class="field-control"
+                type="text"
+                inputmode="decimal"
+                autocomplete="off"
+                value="2000"
+                placeholder="0"
+              >
+            </div>
+            <div class="field">
+              <label class="field-label" for="weightInput">Вес, кг</label>
+              <input
+                id="weightInput"
+                class="field-control"
+                type="text"
+                inputmode="decimal"
+                autocomplete="off"
+                value="1,5"
+                placeholder="0,5"
+              >
+            </div>
+          </div>
+
+          <div class="field field-city">
+            <label class="field-label" for="citySelect">Город получения (тариф Jana Post, пункт выдачи)</label>
+            <div class="select-wrap">
+              <select id="citySelect" class="field-control field-select"></select>
+              <svg class="select-chevron" viewBox="0 0 16 20" fill="none" aria-hidden="true">
+                <path d="M4.5 7.25L8 3.75L11.5 7.25" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M4.5 12.75L8 16.25L11.5 12.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        </section>
+
+        <!-- Настройки: на ПК под полями ввода, на телефоне переносится вниз через CSS order -->
+        <section class="card settings-card" aria-label="Настройки расчёта">
+          <details id="settingsDetails" class="settings-details">
+            <summary class="settings-summary">
+              <span class="settings-summary-left">
+                <span class="settings-triangle" aria-hidden="true">▶</span>
+                <span>Настройки</span>
+              </span>
+              <span id="settingsSummaryMeta" class="settings-meta">455 ₸/$ · 21%</span>
+            </summary>
+
+            <div class="settings-body">
+              <div class="setting-group">
+                <div class="setting-label-row">
+                  <label class="field-label" for="rateInput">Курс доллара, ₸ за $1</label>
+                  <span id="rateStatus" class="rate-status">по умолчанию</span>
+                </div>
+                <div class="setting-input-row">
+                  <input
+                    id="rateInput"
+                    class="field-control setting-control"
+                    type="text"
+                    inputmode="decimal"
+                    autocomplete="off"
+                    value="455"
+                  >
+                  <button id="refreshRateBtn" class="btn btn-secondary" type="button" title="Загрузить актуальный курс USD/KZT">
+                    🔄 Авто-курс
+                  </button>
+                </div>
+                <div class="quick-rate-actions">
+                  <button id="presetExampleRateBtn" class="chip-btn" type="button">
+                    455 ₸ (как в примере)
+                  </button>
+                  <span id="rateUpdatedHint" class="setting-hint"></span>
+                </div>
+              </div>
+
+              <div class="setting-row-2col">
+                <div class="setting-group">
+                  <label class="field-label" for="feePercentInput">НДС и комиссии, %</label>
+                  <input
+                    id="feePercentInput"
+                    class="field-control setting-control"
+                    type="text"
+                    inputmode="decimal"
+                    autocomplete="off"
+                    value="21"
+                  >
+                  <span class="setting-hint">Официальная доставка (по умолчанию 21%)</span>
+                </div>
+
+                <div class="setting-group">
+                  <label class="field-label" for="customRateUsdInput">Свой тариф Jana Post, $/кг</label>
+                  <input
+                    id="customRateUsdInput"
+                    class="field-control setting-control"
+                    type="text"
+                    inputmode="decimal"
+                    autocomplete="off"
+                    placeholder="По городу"
+                  >
+                  <span class="setting-hint">Оставьте пустым для тарифа города</span>
+                </div>
+              </div>
+
+              <div class="settings-footer">
+                <button id="resetSettingsBtn" class="btn-link-danger" type="button">
+                  Сбросить настройки по умолчанию
+                </button>
+              </div>
+            </div>
+          </details>
+        </section>
+      </div>
+
+      <!-- Правая колонка на ПК / Середина на телефоне -->
+      <section class="card results-card" aria-label="Результаты сравнения" aria-live="polite">
+        <div id="janaCard" class="result-option">
+          <div class="result-option-header">
+            <span class="result-icon" aria-hidden="true">📮</span>
+            <h2 class="result-title">Пункт Jana Post</h2>
+            <span id="janaWinnerBadge" class="winner-badge" aria-label="Выгоднее" hidden>✅</span>
+          </div>
+          <div id="janaTotal" class="result-price">4 928 ₸</div>
+          <div id="janaBreakdown" class="result-breakdown">товар 2 000 ₸ + доставка 2 928 ₸</div>
+          <div id="janaTariffNote" class="result-subnote" hidden></div>
+        </div>
+
+        <div id="freeCard" class="result-option result-option--winner">
+          <div class="result-option-header">
+            <span class="result-icon" aria-hidden="true">🚚</span>
+            <h2 class="result-title">Бесплатная официальная</h2>
+            <span id="freeWinnerBadge" class="winner-badge" aria-label="Выгоднее">✅</span>
+          </div>
+          <div id="freeTotal" class="result-price">2 420 ₸</div>
+          <div id="freeBreakdown" class="result-breakdown">товар 2 000 ₸ + НДС и комиссии 420 ₸</div>
+        </div>
+
+        <div class="comparison-summary">
+          <p id="summaryHeadline" class="summary-headline">
+            Бесплатная доставка выгоднее на 2 508 ₸ (50,9%)
+          </p>
+          <p id="breakEvenNote" class="summary-note">
+            Для цены 2 000 ₸ Jana Post выгоднее, если вес меньше 0.22 кг.
+          </p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>

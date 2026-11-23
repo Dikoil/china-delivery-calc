@@ -1,0 +1,20 @@
+{
+  "name": "Доставка из Китая — Калькулятор",
+  "short_name": "Доставка КЗ",
+  "description": "Сравнение стоимости доставки из Китая через пункты Jana Post и бесплатной официальной доставки с НДС и комиссиями.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f2f2f7",
+  "theme_color": "#ffffff",
+  "lang": "ru",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
