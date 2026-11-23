@@ -41,7 +41,6 @@
     feePercentInput: document.getElementById('feePercentInput'),
     customRateUsdInput: document.getElementById('customRateUsdInput'),
     refreshRateBtn: document.getElementById('refreshRateBtn'),
-    presetExampleRateBtn: document.getElementById('presetExampleRateBtn'),
     resetSettingsBtn: document.getElementById('resetSettingsBtn'),
     rateStatus: document.getElementById('rateStatus'),
     rateUpdatedHint: document.getElementById('rateUpdatedHint'),
@@ -365,15 +364,6 @@
       state.rateMode = 'auto';
       saveState();
       fetchLiveRate(true);
-    });
-
-    dom.presetExampleRateBtn.addEventListener('click', () => {
-      state.rate = DEFAULT_RATE;
-      state.rateMode = 'manual';
-      dom.rateInput.value = String(DEFAULT_RATE);
-      updateRateStatusUI('info', 'фиксированный (455 ₸)');
-      saveState();
-      render();
     });
 
     dom.resetSettingsBtn.addEventListener('click', () => {
